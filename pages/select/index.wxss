@@ -1,29 +1,71 @@
-/* pages/select/index.wxss */
 .selectIcon{
   text-align: center;
   margin: 0 auto;
-  width: 350rpx;
-  height: 350rpx;
-  margin-bottom: 130rpx;
+  width: 310rpx;
+  height: 650rpx;
+  margin-bottom: 60rpx;
   padding-top: 100rpx;
+  position: relative;
+
 }
-.answer{
-  width:275rpx;
-  height:275rpx;
+.fenleilx{
+  position: absolute;
 }
+.fenleilxImage{
+  width:100rpx;
+  height:130rpx;
+  margin-top: 175rpx;
+  margin-left: 110rpx;
+}
+.suijilx{
+  position: absolute;
+}
+.suijilxImage{
+  width: 100rpx;
+  height: 130rpx;
+  margin-top: 175rpx;
+  margin-left: 550rpx;
+}
+.vipzt{
+  position: absolute;
+}
+.vipztImage{
+  width: 100rpx;
+  height: 130rpx;
+  margin-top: -290rpx;
+  margin-left: 110rpx;
+  display: flex;
+}
+.cuot-souc{
+  position: absolute;
+}
+.cuotshoucImage{
+  width: 100rpx;
+  height: 130rpx;
+  margin-top: -290rpx;
+  margin-left: 550rpx;
+  display: flex;
+}
+.shunxu{
+  width:300rpx;
+  height:300rpx;
+}
+.fangzhen{
+  width:300rpx;
+  height:300rpx;
+}
+
 .selectQuestionMenu{
-  font-size:30rpx;
+  font-size:40rpx;
   background-color:#eef6f6;
-  width:400rpx;
+  /* width:400rpx; */
   height:90rpx;
   margin:0 auto;
   text-align:center;
   justify-content:center;
   display:flex;
   align-items:center;
-  color:#adc2c1;
-  margin-bottom:80rpx;
-
+  color:#2db7f5;
 }
 .start{
   font-size: 30rpx;

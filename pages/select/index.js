@@ -1,4 +1,4 @@
-// pages/select/index.js
+import { request } from "../../request/index.js";
 Page({
 
   /**
@@ -7,54 +7,67 @@ Page({
   data: {
     selectQuestionMenu:'请选择',
     objectQuestionMenu:{},
-    questionMenu:[],
-    index: 0,
+    questionGroupList:[],
+    currentPage:1,
+    pagesize:6
+  },
+  totalPages:1,
+
+  onLoad: function (options) {
+    this.getList();
   },
 
-  onLoad (e) {
-
+  getList(){
+    var current = this.data.currentPage;
+    var limit = this.data.pagesize;
     //获取套题
-    wx.u.getQuestionMenu().then(res=>{
-      var questionMenu = [];
-      if( res.result.length>0 ){
-        for( var i =0;i<res.result.length;i++ ){
-          questionMenu.push(res.result[i].name);
-        }
-      }
-      console.log(questionMenu);
+    request({ 
+      url: `/question-group/pageCondition/${current}/${limit}`
+    })
+    .then(result => {
+      var list = result.data.rows;
+      const total =result.data.total;
+      this.totalPages=Math.ceil(total/this.data.pagesize);
       this.setData({
-        questionMenu: questionMenu,
-        objectQuestionMenu:res.result
+        questionGroupList:[...this.data.questionGroupList,...list]
       })
     })
+    wx.stopPullDownRefresh();
   },
 
-  /**
-   * 选择题库
-   */
-  changeMenu (e){
-    console.log(e);
-    this.setData({
-      index:e.detail.value,
-      selectQuestionMenu: this.data.questionMenu[e.detail.value]
-    })
+  fenleilx(){
+    console.log("00000000000000000000000");
+  },
+  suijilx(){
+    console.log("222222222222222222222");
+  },
+  shunxuImage(){
+    console.log("333333333333333333");
+  },
+  fangzhenImage(){
+    console.log("44444444444444444444");
+  },
+  vipzt(){
+    console.log("55555555555555555555");
+  },
+  cuotsouc(){
+    console.log("666666666666666666666666");
   },
 
-  /**
-   * 开始答题
-   */
-  startAnswer (e){
-    if (this.data.selectQuestionMenu == '请选择'){
-      wx.showToast({
-        title: '请选择题目',
-        duration:1500,
-        image:'/images/warning.png'
+  onReachBottom(){
+      if(this.data.currentPage >= this.totalPages){
+        wx.showToast({ title: '没有下一页数据' });
+          
+      }else{
+        this.data.currentPage++;
+        this.getList();
+      }
+    },
+    onPullDownRefresh(){
+      this.setData({
+        goodsList:[]
       })
-      return;
+      this.data.currentPage = 1;
+      this.getList();
     }
-    console.log(this.data.objectQuestionMenu[this.data.index].name)
-    wx.navigateTo({
-      url: '/pages/answerInfo/index?id=' + this.data.objectQuestionMenu[this.data.index].objectId + '&questionMenu=' + this.data.objectQuestionMenu[this.data.index].name,
-    })
-  }
 })

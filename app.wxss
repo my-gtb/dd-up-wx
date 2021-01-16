@@ -1,4 +1,5 @@
 /**app.wxss**/
+@import "./styles/iconfont.wxss";
 page{
 	width: 100%;
 	height: 100%;

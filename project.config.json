@@ -61,20 +61,26 @@
       "currentL": -1,
       "list": []
     },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
     "miniprogram": {
       "current": 1,
       "list": [
         {
           "id": 0,
-          "name": "记录页面",
-          "pathName": "pages/history/index",
-          "query": "id=2533ecc298"
+          "name": "pages/select/index",
+          "pathName": "pages/select/index",
+          "query": "",
+          "scene": null
         },
         {
-          "id": -1,
-          "name": "错题页面",
-          "pathName": "pages/wrongAnswer/index",
-          "query": ""
+          "id": 1,
+          "name": "pages/answerInfo/index",
+          "pathName": "pages/answerInfo/index",
+          "query": "groupId=15",
+          "scene": null
         }
       ]
     }

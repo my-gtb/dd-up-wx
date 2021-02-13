@@ -29,6 +29,7 @@ Page({
     wx.getUserInfo({
       success(res) {
         wx.getUserInfo().then(res1 => {
+          console.log("1111111111111---");
           var bmobUser = res1.result;
           if (bmobUser.avatarUrl == '' || bmobUser.avatarUrl == undefined) {
             wx.changeUserInfo(res.userInfo.avatarUrl, res.userInfo.nickName).then(res2 => { });

@@ -1,0 +1,16 @@
+<!--pages/groupList/index.wxml-->
+<view>
+	<view
+	 class="select_item"
+	 wx:for="{{questionGroupList}}"
+	 wx:key="id"
+	 bindtap="getUrl"
+	 data-groupId="{{item.id}}"
+	 data-time="{{item.time}}"
+	>
+		<view class="selectQuestionMenu">
+			{{item.text}}
+		</view>
+	</view>
+</view>
+

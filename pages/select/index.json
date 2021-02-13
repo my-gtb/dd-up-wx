@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "答题"
+  "navigationBarTitleText": "答题",
+  "usingComponents": {
+    "i-tag": "../../dist/tag/index"
+  }
 }

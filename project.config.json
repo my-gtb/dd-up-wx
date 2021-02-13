@@ -81,6 +81,27 @@
           "pathName": "pages/answerInfo/index",
           "query": "groupId=15",
           "scene": null
+        },
+        {
+          "id": 2,
+          "name": "pages/groupList/index",
+          "pathName": "pages/groupList/index",
+          "query": "groupType=3",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/answer/index",
+          "pathName": "pages/answer/index",
+          "query": "groupId=5",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/analysis/index",
+          "pathName": "pages/analysis/index",
+          "query": "code=1613019580163-1&groupId=5",
+          "scene": null
         }
       ]
     }

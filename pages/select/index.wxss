@@ -2,71 +2,38 @@
   text-align: center;
   margin: 0 auto;
   width: 310rpx;
-  height: 650rpx;
-  margin-bottom: 60rpx;
-  padding-top: 100rpx;
-  position: relative;
+  height: 555rpx;
+  padding-top: 60rpx;
 
-}
-.fenleilx{
-  position: absolute;
-}
-.fenleilxImage{
-  width:100rpx;
-  height:130rpx;
-  margin-top: 175rpx;
-  margin-left: 110rpx;
-}
-.suijilx{
-  position: absolute;
-}
-.suijilxImage{
-  width: 100rpx;
-  height: 130rpx;
-  margin-top: 175rpx;
-  margin-left: 550rpx;
-}
-.vipzt{
-  position: absolute;
-}
-.vipztImage{
-  width: 100rpx;
-  height: 130rpx;
-  margin-top: -290rpx;
-  margin-left: 110rpx;
-  display: flex;
-}
-.cuot-souc{
-  position: absolute;
-}
-.cuotshoucImage{
-  width: 100rpx;
-  height: 130rpx;
-  margin-top: -290rpx;
-  margin-left: 550rpx;
-  display: flex;
 }
 .shunxu{
-  width:300rpx;
-  height:300rpx;
+  width:250rpx;
+  height:250rpx;
 }
 .fangzhen{
-  width:300rpx;
-  height:300rpx;
+  width:250rpx;
+  height:250rpx;
+}
+.item-group{
+  display: flex;
+  flex-direction:row;  /*从左到右的水平方向为主轴*/
+  justify-content:center; /*主轴居中对齐*/
+}
+.item{
+  display: flex;
+  width: 180rpx;
+  flex-wrap:wrap;  /* 个元素单行显示 */
+  justify-content: center;
+}
+.item-img{
+  display: flex;
+  width: 100rpx;
+  height: 100rpx;
 }
 
-.selectQuestionMenu{
-  font-size:40rpx;
-  background-color:#eef6f6;
-  /* width:400rpx; */
-  height:90rpx;
-  margin:0 auto;
-  text-align:center;
-  justify-content:center;
-  display:flex;
-  align-items:center;
-  color:#2db7f5;
-}
+
+
+
 .start{
   font-size: 30rpx;
   background-color: #2db7f5;
@@ -80,4 +47,20 @@
   display:flex;
   align-items:center;
   
+}
+
+.question-item {
+  margin-top: 24rpx;
+  padding: 15px;
+  border-top: 1rpx #b4e5fc solid;
+  border-bottom: 1rpx #b4e5fc solid;
+}
+
+.question-item-title {
+  font-size: 15px;
+}
+
+.question-title {
+  margin-left: 8px;
+  line-height: 25px;
 }

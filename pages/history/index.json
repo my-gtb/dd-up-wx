@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "答题记录",
+  "usingComponents": {
+    "i-spin": "../../dist/spin/index"
+  }
 }

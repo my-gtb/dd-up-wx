@@ -1,2 +1,206 @@
 <!--pages/analysis/index.wxml-->
-<text>pages/analysis/index.wxml</text>
+<view class='page'>
+	<view class="header-model2 css-shadow-bottom">
+		<text class="model2-timepiece">题目组：{{groupName}}
+		</text>
+	</view>
+	<!--题目-->
+	<view style='padding-bottom:44px;'>
+		<view class="question-list">
+			<view class="question-list-title">
+				<i-tag
+				 class="i-tags"
+				 name="单选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==1}}"
+				>
+					单选
+				</i-tag>
+				<i-tag
+				 class="i-tags"
+				 name="多选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==2}}"
+				>
+					多选
+				</i-tag>
+				<text class='question-title'>{{questionInfo.text}}</text>
+			</view>
+		</view>
+
+		<!--答案选择 - 单选-->
+		<i-panel wx:if="{{questionInfo.typeId==1}}">
+			<radio-group bindchange="radioChange" class="option-group-ui">
+				<label
+				 class="weui-cell weui-check__label"
+				 wx:for="{{questionInfo.options}}"
+				 wx:key="{{item.id}}"
+				>
+					<view class="weui-cell__hd option-ui">
+						<radio
+						 value="{{item.id}}"
+						 disabled="{{disabled}}"
+						 color="#2d8cf0"
+						 checked="{{item.isChecked}}"
+						/>
+						{{s[index]}}{{item.text}}
+					</view>
+
+				</label>
+			</radio-group>
+		</i-panel>
+
+		<!--答案选择 - 多选-->
+		<i-panel wx:if="{{questionInfo.typeId==2}}">
+			<checkbox-group bindchange="checkboxChange" class="option-group-ui">
+				<label
+				 class="weui-cell weui-check__label"
+				 wx:for="{{questionInfo.options}}"
+				 wx:key="{{item.id}}"
+				>
+					<view class="weui-cell__hd option-ui">
+						<checkbox
+						 value="{{item.id}}"
+						 disabled="{{disabled}}"
+						 color="#2d8cf0"
+						 checked="{{item.isChecked}}"
+						/>
+						{{s[index]}}{{item.text}}
+					</view>
+				</label>
+			</checkbox-group>
+		</i-panel>
+
+		<i-panel>
+			<view wx:if="{{isShowParse}}">
+				<view class='answer'>
+					<view class='answerTitle'>正确答案：</view>
+					<view class='answerContent'>
+						<view wx:for="{{questionInfo.keyNames}}" wx:key="index">{{item}}</view>
+					</view>
+					<view class='answerTitle'>你的答案：</view>
+					<view wx:if="{{questionInfo.chooseNames.length>0}}" class='answerContent'>
+						<view wx:for="{{questionInfo.chooseNames}}" wx:key="index">{{item}}</view>
+					</view>
+					<view wx:else class='answerContent'>
+						<view>空</view>
+					</view>
+					<view class='answerTitle'>解析：</view>
+					<view wx:if="{{questionInfo.parse !=''}}" class='answerContent'>
+						{{questionInfo.parse}}
+					</view>
+				</view>
+			</view>
+		</i-panel>
+
+		<!--底部栏-->
+		<view class='css-shadow tab-bar'>
+			<!-- 分页 -->
+			<i-page
+			 current="{{ index+1 }}"
+			 total="total"
+			 bind:change="handlePageChange"
+			>
+				<view slot="prev">
+					<i-icon type="return"></i-icon>
+					上一题
+				</view>
+				<view slot="content">
+					<i-row>
+						<i-col span="23">
+							<view>
+								<button class="footer-defbtn" bindtap='handleOpen'>
+									<i-icon
+									 type="task"
+									 size='25'
+									 color="#3D971C"
+									 class='footer-btn-text'
+									/>
+									<view class='footer-btn-text'>
+										<text>{{index+1}}/{{total}}</text>
+									</view>
+								</button>
+							</view>
+						</i-col>
+					</i-row>
+				</view>
+				<view slot="next">
+					<view style='height:100%;'>
+						下一题
+						<i-icon type="enter"></i-icon>
+					</view>
+				</view>
+			</i-page>
+		</view>
+		<!--下拉弹出-->
+		<i-action-sheet
+		 visible="{{ actionVisible }}"
+		 actions=""
+		 bind:cancel="actionCancel"
+		 bind:click="actionClickItem"
+		>
+			<view slot="header" style="padding:2px">
+				<view class="i-action-header">
+					<i-row>
+						<i-col span="20" i-class="col-class">
+							<view class="i-action-header-left">
+								<text>正确: <text style="font-weight: bold;color:#3D971C">{{right}}</text>
+								</text>
+								<text>错误: <text style="font-weight: bold;color:#A01E32">{{(wrong)}}</text>
+								</text>
+								<text>正确率: <text style="font-weight: bold;color:#18836b">{{persent}}%</text>
+								</text>
+							</view>
+						</i-col>
+						<i-col span="4" i-class="col-class">
+							<view class="i-action-header-r">
+
+								<button
+								 style="padding:0px;"
+								 bindtap="actionCancel"
+								 size="small"
+								>关闭
+								</button>
+
+							</view>
+						</i-col>
+					</i-row>
+				</view>
+				<scroll-view>
+					<view class='i-action-ico'>
+
+						<view
+						 wx:for="{{result}}"
+						 class="i-action-ico-bor"
+						 wx:for-index="idx"
+						 for:key="i"
+						 data-index="{{idx}}"
+						 bindtap='dump'
+						>
+							<view class=" {{item.judge==1?'succ':item.judge==0?'err':''}}">
+								<i-icon
+								 type="right"
+								 color="#3D971C"
+								 wx:if="{{item.judge==1}}"
+								 size="14"
+								/>
+								<i-icon
+								 type="close"
+								 color="#A01E32"
+								 wx:if="{{item.judge==0}}"
+								 size="14"
+								/>
+								<text>{{idx+1}}</text>
+							</view>
+						</view>
+						<!-- <view>1 </view> -->
+					</view>
+				</scroll-view>
+			</view>
+		</i-action-sheet>
+		<!--下拉弹出-->
+	</view>
+</view>
+

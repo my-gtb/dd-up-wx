@@ -1,4 +1,3 @@
-// pages/answerInfo/index.js
 Page({
 
   /**

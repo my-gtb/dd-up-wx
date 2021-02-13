@@ -1,2 +1,256 @@
 <!--pages/answer/index.wxml-->
-<text>pages/answer/index.wxml</text>
+<view class='page'>
+	<!-- <i-spin
+	 fix
+	 size="large"
+	 wx:if="{{loading}}"
+	></i-spin> -->
+	<view class="header-model2 css-shadow-bottom">
+		<i-row>
+			<i-col
+			 span="10"
+			 i-class="col-class-down"
+			 wx:if="{{isShowTime}}"
+			>
+				<text class="model2-timepiece">倒计时：{{countdown}}</text>
+			</i-col>
+
+			<i-col span="10" i-class="col-class-sub">
+				<text wx:if="{{isShowSubmit}}" class="submit" bindtap='handleSubmitOpen'>提交</text>
+			</i-col>
+		</i-row>
+	</view>
+
+	<!-- 进度条 -->
+	<i-progress
+	 percent="{{percent}}"
+	 stroke-width='2'
+	 i-class='progress'
+	 status="wrong"
+	 status="active"
+	 hide-info
+	></i-progress>
+	<!-- /进度条 -->
+
+	<!--题目-->
+	<view style='padding-bottom:44px;'>
+		<view class="question-list">
+			<view class="question-list-title">
+				<i-tag
+				 class="i-tags"
+				 name="单选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==1}}"
+				>
+					单选
+				</i-tag>
+				<i-tag
+				 class="i-tags"
+				 name="多选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==2}}"
+				>
+					多选
+				</i-tag>
+				<text class='question-title'>{{questionInfo.text}}</text>
+			</view>
+		</view>
+
+		<!--答案选择 - 单选-->
+		<i-panel wx:if="{{questionInfo.typeId==1}}">
+			<radio-group bindchange="radioChange" class="option-group-ui">
+				<label
+				 class="weui-cell weui-check__label"
+				 wx:for="{{questionInfo.options}}"
+				 wx:key="{{item.id}}"
+				>
+					<view class="weui-cell__hd option-ui">
+						<radio
+						 value="{{item.id}}"
+						 disabled="{{isDisabled}}"
+						 color="#2d8cf0"
+						 checked="{{item.isChecked}}"
+						/>
+						{{s[index]}}{{item.text}}
+					</view>
+
+				</label>
+			</radio-group>
+		</i-panel>
+
+		<!--答案选择 - 多选-->
+		<i-panel wx:if="{{questionInfo.typeId==2}}">
+			<checkbox-group bindchange="checkboxChange" class="option-group-ui">
+				<label
+				 class="weui-cell weui-check__label"
+				 wx:for="{{questionInfo.options}}"
+				 wx:key="{{item.id}}"
+				>
+					<view class="weui-cell__hd option-ui">
+						<checkbox
+						 value="{{item.id}}"
+						 disabled="{{isDisabled}}"
+						 color="#2d8cf0"
+						 checked="{{item.isChecked}}"
+						/>
+						{{s[index]}}{{item.text}}
+					</view>
+				</label>
+			</checkbox-group>
+		</i-panel>
+
+		<i-panel>
+			<view wx:if="{{isShowParse}}">
+				<view class='answer'>
+					<view class='answerTitle'>正确答案：</view>
+					<view class='answerContent'>
+						<view wx:for="{{questionInfo.keyNames}}" wx:key="index">{{item}}</view>
+					</view>
+					<view class='answerTitle'>你的答案：</view>
+					<view wx:if="{{questionInfo.optionNames.length>0}}" class='answerContent'>
+						<view wx:for="{{questionInfo.optionNames}}" wx:key="index">{{item}}</view>
+					</view>
+					<view wx:else class='answerContent'>
+						<view>空</view>
+					</view>
+					<view class='answerTitle'>解析：</view>
+					<view wx:if="{{questionInfo.parse !=''}}" class='answerContent'>
+						{{questionInfo.parse}}
+					</view>
+				</view>
+
+				<view wx:if="{{questionInfo.help == '' && questionInfo.helpPicUrl == '' && questionInfo.helpAudioUrl == '' && questionInfo.helpVideoUrl == '' }}" class='answerContent'>
+					无
+				</view>
+			</view>
+		</i-panel>
+
+		<!--底部栏-->
+		<view class='css-shadow tab-bar'>
+			<!-- 分页 -->
+			<i-page
+			 current="{{ index }}"
+			 total="total"
+			 bind:change="handlePageChange"
+			>
+				<view slot="prev">
+					<i-icon type="return"></i-icon>
+					上一题
+				</view>
+				<view slot="content">
+					<i-row>
+						<i-col span="23">
+							<view>
+								<button class="footer-defbtn" bindtap='handleOpen'>
+									<i-icon
+									 type="task"
+									 size='25'
+									 color="#3D971C"
+									 class='footer-btn-text'
+									/>
+									<view class='footer-btn-text'>
+										<text>{{index}}/{{total}}</text>
+									</view>
+								</button>
+							</view>
+						</i-col>
+					</i-row>
+				</view>
+				<view slot="next">
+					<view style='height:100%;'>
+						下一题
+						<i-icon type="enter"></i-icon>
+					</view>
+				</view>
+			</i-page>
+		</view>
+
+		<!--下拉弹出-->
+		<i-action-sheet
+		 visible="{{ actionVisible }}"
+		 actions=""
+		 bind:cancel="actionCancel"
+		 bind:click="actionClickItem"
+		>
+			<view slot="header" style="padding:2px">
+				<view class="i-action-header">
+					<i-row>
+						<i-col span="20" i-class="col-class">
+							<view class="i-action-header-left">
+								<text>正确: <text style="font-weight: bold;color:#3D971C">{{questionOk}}</text>
+								</text>
+								<text>错误: <text style="font-weight: bold;color:#A01E32">{{questionErr}}</text>
+								</text>
+								<text>正确率: <text style="font-weight: bold;color:#18836b">{{percentage}}%</text>
+								</text>
+							</view>
+						</i-col>
+						<i-col span="4" i-class="col-class">
+							<view class="i-action-header-r">
+
+								<button
+								 style="padding:0px;"
+								 bindtap="actionCancel"
+								 size="small"
+								>关闭
+								</button>
+
+							</view>
+						</i-col>
+					</i-row>
+				</view>
+				<scroll-view>
+					<view class='i-action-ico'>
+
+						<view
+						 wx:for="{{result}}"
+						 class="i-action-ico-bor"
+						 wx:for-index="idx"
+						 for:key="i"
+						>
+							<view class="{{index-1==idx?'def':''}} {{item.judge==1?'succ':item.judge==0?'err':''}}">
+								<i-icon
+								 type="right"
+								 color="#3D971C"
+								 wx:if="{{item.judge==1}}"
+								 size="14"
+								/>
+								<i-icon
+								 type="close"
+								 color="#A01E32"
+								 wx:if="{{item.judge==0}}"
+								 size="14"
+								/>
+								<text>{{idx+1}}</text>
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+			</view>
+		</i-action-sheet>
+		<!--下拉弹出-->
+
+		<!--交卷对话框-->
+		<i-modal
+		 visible="{{ visible1 }}"
+		 actions="{{ action1 }}"
+		 bind:click="checkSubmit"
+		>
+			<view>确认交卷？</view>
+		</i-modal>
+
+		<!--时间到交卷对话框-->
+		<i-modal
+		 title="提示"
+		 visible="{{visible2}}"
+		 actions="{{action2}}"
+		 bind:click="handleSubmit"
+		>
+			<view>时间已到,系统自动交卷</view>
+		</i-modal>
+	</view>
+</view>
+<i-message id="message" />
+

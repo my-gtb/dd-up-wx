@@ -1,0 +1,8 @@
+.selectQuestionMenu{
+    font-size:40rpx;
+    height:auto;
+    margin:30rpx 56rpx;
+    text-align:left;
+    display:flex;
+    color:#2db7f5;
+  }

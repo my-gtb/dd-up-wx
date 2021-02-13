@@ -5,53 +5,42 @@ Page({
    * 页面的初始数据
    */
   data: {
-    selectQuestionMenu:'请选择',
-    objectQuestionMenu:{},
-    questionGroupList:[],
-    currentPage:1,
-    pagesize:6
+    groupType:{},
   },
   totalPages:1,
 
   onLoad: function (options) {
-    this.getList();
+    let groupType = getApp().globalData.groupType;
+    this.setData({
+      groupType:groupType
+    })
   },
 
-  getList(){
-    var current = this.data.currentPage;
-    var limit = this.data.pagesize;
-    //获取套题
-    request({ 
-      url: `/question-group/pageCondition/${current}/${limit}`
+  zhuanxianglx(){
+    wx.navigateTo({
+      url: '/pages/groupList/index?groupType='+this.data.groupType.TYPE_CATALOG
     })
-    .then(result => {
-      var list = result.data.rows;
-      const total =result.data.total;
-      this.totalPages=Math.ceil(total/this.data.pagesize);
-      this.setData({
-        questionGroupList:[...this.data.questionGroupList,...list]
-      })
-    })
-    wx.stopPullDownRefresh();
-  },
 
-  fenleilx(){
-    console.log("00000000000000000000000");
   },
-  suijilx(){
-    console.log("222222222222222222222");
+  shunxu(){
+    wx.navigateTo({
+      url: '/pages/answer/index?groupType='+this.data.groupType.TYPE_COMMON
+    })
   },
-  shunxuImage(){
-    console.log("333333333333333333");
-  },
-  fangzhenImage(){
-    console.log("44444444444444444444");
+  fangzhen(){
+    wx.navigateTo({
+      url: '/pages/groupList/index?groupType='+this.data.groupType.TYPE_SIMULATION
+    })
   },
   vipzt(){
-    console.log("55555555555555555555");
+    wx.navigateTo({
+      url: '/pages/groupList/index?groupType='+this.data.groupType.TYPE_VIP
+    })
   },
   cuotsouc(){
-    console.log("666666666666666666666666");
+    wx.navigateTo({
+      url: '/pages/answerInfo/index?customerId=6'
+    })
   },
 
   onReachBottom(){

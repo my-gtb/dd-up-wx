@@ -15,7 +15,8 @@
     "pages/rankList/index",
     "pages/my/index",
     "pages/historyList/index",
-    "pages/feedback/index"
+    "pages/feedback/index",
+    "pages/groupList/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,56 +1,57 @@
 <!--pages/select/index.wxml-->
 <view>
-	<view class="fenleilx">
-		<image
-		 bindtap="fenleilx"
-		 src='/images/dd_fenleilx.png'
-		 class='fenleilxImage'
-		></image>
-	</view>
-	<view class="suijilx">
-		<image
-		 src='/images/dd_suijilx.png'
-		 class='suijilxImage'
-		 bindtap="suijilx"
-		></image>
-	</view>
 	<view class='selectIcon'>
 		<image
-		 src='/images/dd_shunxu.png'
-		 bindtap="shunxuImage"
+		 src='/images/shunxu_img.png'
+		 bindtap="shunxu"
 		 class='shunxu'
 		></image>
 		<image
-		 src='/images/dd_fangzhen.png'
-		 bindtap="fangzhenImage"
+		 src='/images/fangzhen_img.png'
+		 bindtap="fangzhen"
 		 class='fangzhen'
 		></image>
 	</view>
-	<view class="vipzt">
-		<image
-		 src='/images/dd_vipzt.png'
-		 class='vipztImage'
-		 bindtap="vipzt"
-		></image>
+	<view class="item-group">
+		<view class="item">
+			<image
+			 src='/images/zhuanxiang_img.png'
+			 class='item-img'
+			 bindtap="zhuanxianglx"
+			></image>
+			<text>专项练习</text>
+		</view>
+		<view class="item">
+			<image
+			 src='/images/zhenti_img.png'
+			 class='item-img'
+			 bindtap="vipzt"
+			>
+			</image>
+			<text>VIP真题</text>
+		</view>
+		<view class="item">
+			<image
+			 src='/images/cuoti-shoucang_img.png'
+			 class='item-img'
+			 bindtap="cuotsouc"
+			></image>
+			<text>错题-收藏</text>
+		</view>
 	</view>
-	<view class="cuot-souc">
-		<image
-		 src='/images/dd_cuot-shouc.png'
-		 class='cuotshoucImage'
-		 bindtap="cuotsouc"
-		></image>
+	<view class="question-item">
+		<view class="question-item-title">
+			<i-tag
+			 class="i-tags"
+			 name="每日一题"
+			 type="border"
+			 color="blue"
+			>
+				每日一题
+			</i-tag>
+			<text class='question-title'>每日一题题目京哈说不定就还是</text>
+		</view>
 	</view>
-	<!-- <view>
-		<navigator
-		 class="select_item"
-		 wx:for="{{questionGroupList}}"
-		 wx:key="id"
-		 url="/pages/answerInfo/index?groupId={{item.id}}"
-		>
-			<view class="selectQuestionMenu">
-				{{item.text}}
-			</view>
-		</navigator>
-	</view> -->
+
 </view>
 

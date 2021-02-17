@@ -19,7 +19,7 @@
 			 class='item-img'
 			 bindtap="zhuanxianglx"
 			></image>
-			<text>专项练习</text>
+			<text class="img-text">专项练习</text>
 		</view>
 		<view class="item">
 			<image
@@ -28,7 +28,7 @@
 			 bindtap="vipzt"
 			>
 			</image>
-			<text>VIP真题</text>
+			<text class="img-text">VIP真题</text>
 		</view>
 		<view class="item">
 			<image
@@ -36,10 +36,10 @@
 			 class='item-img'
 			 bindtap="cuotsouc"
 			></image>
-			<text>错题-收藏</text>
+			<text class="img-text">错题-收藏</text>
 		</view>
 	</view>
-	<view class="question-item">
+	<view class="question-item" bindtap="dailyQuestion">
 		<view class="question-item-title">
 			<i-tag
 			 class="i-tags"
@@ -49,9 +49,19 @@
 			>
 				每日一题
 			</i-tag>
-			<text class='question-title'>每日一题题目京哈说不定就还是</text>
+			<text class='question-title'>{{dailyQuestionName}}</text>
 		</view>
 	</view>
+
+	<!--时间到交卷对话框-->
+	<i-modal
+		title="提示"
+		visible="{{isVisible}}"
+		actions="{{action}}"
+		bind:click="handleSignIn"
+	>
+		<view>您已成功签到，获得积分 +{{loginPoints}}</view>
+	</i-modal>
 
 </view>
 

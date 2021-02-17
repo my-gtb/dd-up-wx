@@ -1,5 +1,4 @@
 import { request } from "../../request/index.js";
-import { $wuxCountDown } from '../../wux/index'
 const { $Message } = require('../../dist/base/index');
 Page({
 
@@ -11,7 +10,7 @@ Page({
     percent: 0, //进度条百分比
     time: 45, //时间
     countdown: '', //倒计时
-    s: ['A. ', 'B. ', 'C. ', 'D. ', 'E. '],
+    s: ['A. ', 'B. ', 'C. ', 'D. ', 'E. ', 'F. ', 'G. ', 'D. ', 'I. '],
     index: 1, //第几题
     current: '', //单选选中的答案
     currentD: [], //多选选中的答案
@@ -254,7 +253,8 @@ Page({
   //翻页
   handlePageChange({ detail }) {
     const action = detail.type;
-
+console.log("detail = ");
+console.log(detail);
     //上下一题
     if (action === 'next') {
       const r = this.data.result;
@@ -290,7 +290,9 @@ Page({
         let customerId = getApp().globalData.customerId;
         let data = {
           "customerId":customerId,
-          "questionId":r[i].id
+          "questionId":r[i].id,
+          "groupId":questionInfo.groupId,
+          "isWrong":true
         };
         if(!isOk){
           request({url: "/question/saveQuestionWrong",data:data,method:'post'})
@@ -355,7 +357,7 @@ Page({
     var questionOk = this.data.questionOk
     let customerId = getApp().globalData.customerId;
     let submitData = [];
-    let code = new Date().getTime();
+    let code = Math.round(new Date().getTime()/1000);
     console.log("customerId = "+customerId);
     console.log("result = ");
     console.log(result);
@@ -456,5 +458,14 @@ dateFormat(second) {
 // 位数不足补零
 fillZeroPrefix(num) {
   return num < 10 ? "0" + num : num
-}
+},
+
+/**
+  * 生命周期函数--监听页面卸载
+  */
+onUnload: function () {
+  this.setData({
+      isStopCountDown: true
+  });
+},
 })

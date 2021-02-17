@@ -102,6 +102,20 @@
           "pathName": "pages/analysis/index",
           "query": "code=1613019580163-1&groupId=5",
           "scene": null
+        },
+        {
+          "id": 5,
+          "name": "pages/dailyQuestion/index",
+          "pathName": "pages/dailyQuestion/index",
+          "query": "questionId=29",
+          "scene": null
+        },
+        {
+          "id": 6,
+          "name": "pages/userQuestion/index",
+          "pathName": "pages/userQuestion/index",
+          "query": "customerId=2",
+          "scene": null
         }
       ]
     }

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "每日一题",
+  "usingComponents": {
+    "i-row": "../../dist/row/index",
+    "i-col": "../../dist/col/index",
+    "i-panel": "../../dist/panel/index",
+    "i-tag": "../../dist/tag/index",
+    "i-modal": "../../dist/modal/index"
+  }
+}

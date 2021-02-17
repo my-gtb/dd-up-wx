@@ -67,6 +67,7 @@ App({
       TYPE_COMMON:"4",
     },
     questions:null,
+    isSignIn:false,
   },
   
 })

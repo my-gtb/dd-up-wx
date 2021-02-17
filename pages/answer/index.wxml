@@ -1,10 +1,5 @@
 <!--pages/answer/index.wxml-->
 <view class='page'>
-	<!-- <i-spin
-	 fix
-	 size="large"
-	 wx:if="{{loading}}"
-	></i-spin> -->
 	<view class="header-model2 css-shadow-bottom">
 		<i-row>
 			<i-col
@@ -157,6 +152,10 @@
 							</view>
 						</i-col>
 					</i-row>
+				</view>
+				<view slot="shoucang" style="z-index:100">
+					<i-icon type="return"></i-icon>
+					收藏
 				</view>
 				<view slot="next">
 					<view style='height:100%;'>

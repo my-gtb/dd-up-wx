@@ -16,7 +16,9 @@
     "pages/my/index",
     "pages/historyList/index",
     "pages/feedback/index",
-    "pages/groupList/index"
+    "pages/groupList/index",
+    "pages/dailyQuestion/index",
+    "pages/userQuestion/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

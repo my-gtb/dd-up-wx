@@ -1,0 +1,62 @@
+<Tabs tabs="{{tabs}}" bindtabsItemChange="handleTabsItemChange">
+	<block wx:if="{{tabs[0].isActive}}">
+        <view class="item-img">
+            <image src="/images/my-question.png" mode="widthFix"/>
+            <text class="item-img-num">
+                {{totalWrongCount}}
+            </text>
+              
+            <text class="item-img-text">
+                错题数
+            </text>
+              
+        </view>
+        <view class="confirm-btn" bindtap="getQuestionWrong">
+            <text >全部错题</text>
+        </view>
+        <view class="today-wrong" bindtap="getDailyWrong">
+            <view class="today-wrong-left">今日错题</view>
+            <view class="today-wrong-right">共错{{todayWrongCount}}题 <i-icon type="enter"></i-icon></view>
+        </view>
+        <view>
+            <scroll-view scroll-y="true" style="height:{{scrollHeight1}}px">
+                <view class="group-item" wx:for="{{wrongCountList}}" wx:key="index" data-group-id="{{item.groupId}}" bindtap="getGroupQuestionWrong">
+                    <view class="item-left">{{item.groupName}}</view>
+                    <view class="item-right">{{item.count}}<i-icon type="enter"></i-icon></view>
+                </view>
+            </scroll-view>
+        </view>
+        <view wx:if="{{totalWrongCount > 0}}" class="clear-btn" bindtap="clearQuestionWrong">
+            <text >清空我的错题</text>
+        </view>
+	</block>
+	<block wx:elif="{{tabs[1].isActive}}">
+        <view class="item-img">
+            <image src="/images/my-question.png" mode="widthFix"/>
+            <text class="item-img-num">
+                {{collectionCount}}
+            </text>
+              
+            <text class="item-img-text">
+                收藏数
+            </text>
+        </view>
+        <view class="confirm-btn" bindtap="getQuestionCollection">
+            <text >全部收藏</text>
+        </view>
+        <view class="collection-line"></view>
+        <view>
+            <scroll-view scroll-y="true" style="height:{{scrollHeight2}}px">
+                <view class="group-item" wx:for="{{collectionCountList}}" wx:key="index" data-group-id="{{item.groupId}}" bindtap="getGroupQuestionWrong">
+                    <view class="item-left">{{item.groupName}}</view>
+                    <view class="item-right">{{item.count}}<i-icon type="enter"></i-icon></view>
+                </view>
+            </scroll-view>
+        </view>
+
+        <view wx:if="{{collectionCount > 0}}" class="clear-btn" bindtap="clearQuestionCollection">
+            <text >清空我的收藏</text>
+        </view>
+    </block>
+</Tabs>
+

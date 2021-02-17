@@ -1,0 +1,120 @@
+<view class='page'>
+    <view class="header-model2 css-shadow-bottom">
+		<text wx:if="{{!isShowSubmit}}" class="model2-timepiece">{{tips}}</text>
+		<i-row>
+			<i-col span="10" i-class="col-class-sub">
+				<text wx:if="{{isShowSubmit}}" class="submit" bindtap='handleSubmitOpen'>提交</text>
+			</i-col>
+		</i-row>
+	</view>
+
+	<!--题目-->
+	<view style='padding-bottom:44px;'>
+		<view class="question-list">
+			<view class="question-list-title">
+				<i-tag
+				 class="i-tags"
+				 name="单选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==1}}"
+				>
+					单选
+				</i-tag>
+				<i-tag
+				 class="i-tags"
+				 name="多选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==2}}"
+				>
+					多选
+				</i-tag>
+				<text class='question-title'>{{questionInfo.text}}</text>
+			</view>
+		</view>
+
+		<!--答案选择 - 单选-->
+		<i-panel wx:if="{{questionInfo.typeId==1}}">
+			<radio-group bindchange="choiceChange" class="option-group-ui">
+				<label
+				 class="weui-cell weui-check__label"
+				 wx:for="{{questionInfo.options}}"
+				 wx:key="{{item.id}}"
+				>
+					<view class="weui-cell__hd option-ui">
+						<radio
+						 value="{{item.id}}"
+                         disabled="{{isDisabled}}"
+						 color="#2d8cf0"
+						/>
+						{{s[index]}}{{item.text}}
+					</view>
+
+				</label>
+			</radio-group>
+		</i-panel>
+
+		<!--答案选择 - 多选-->
+		<i-panel wx:if="{{questionInfo.typeId==2}}">
+			<checkbox-group bindchange="choiceChange" class="option-group-ui">
+				<label
+				 class="weui-cell weui-check__label"
+				 wx:for="{{questionInfo.options}}"
+				 wx:key="{{item.id}}"
+				>
+					<view class="weui-cell__hd option-ui">
+						<checkbox
+						 value="{{item.id}}"
+                         disabled="{{isDisabled}}"
+						 color="#2d8cf0"
+						/>
+						{{s[index]}}{{item.text}}
+					</view>
+				</label>
+			</checkbox-group>
+		</i-panel>
+
+		<i-panel>
+			<view wx:if="{{isShowParse}}">
+				<view class='answer'>
+					<view class='answerTitle'>正确答案：</view>
+					<view class='answerContent'>
+						<view wx:for="{{questionInfo.keyNames}}" wx:key="index">{{item}}</view>
+					</view>
+					<view class='answerTitle'>你的答案：</view>
+					<view wx:if="{{questionInfo.chooseNames.length>0}}" class='answerContent'>
+						<view wx:for="{{questionInfo.chooseNames}}" wx:key="index">{{item}}</view>
+					</view>
+					<view wx:else class='answerContent'>
+						<view>空</view>
+					</view>
+					<view class='answerTitle'>解析：</view>
+					<view wx:if="{{questionInfo.parse !=''}}" class='answerContent'>
+						{{questionInfo.parse}}
+					</view>
+				</view>
+			</view>
+		</i-panel>
+	</view>
+
+    <!--交卷对话框-->
+    <i-modal
+        visible="{{ isVisible }}"
+        actions="{{ action }}"
+        bind:click="checkSubmit"
+    >
+        <view>确认提交？</view>
+    </i-modal>
+
+    <!--点击左上角返回按钮弹出提示框-->
+    <i-modal
+        visible="{{ isVisible2 }}"
+        actions="{{ action2 }}"
+        bind:click="checkReturn"
+    >
+        <view>退出后当前答题进度将会被清空，是否继续？</view>
+    </i-modal>
+
+</view>
+

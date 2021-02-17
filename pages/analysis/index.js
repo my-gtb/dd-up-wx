@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    s: ['A. ', 'B. ', 'C. ', 'D. ', 'E. '],
+    s: ['A. ', 'B. ', 'C. ', 'D. ', 'E. ', 'F. ', 'G. ', 'D. ', 'I. '],
     questionInfo:{},
     result:{},
     disabled:true,

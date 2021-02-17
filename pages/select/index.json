@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "答题",
   "usingComponents": {
-    "i-tag": "../../dist/tag/index"
+    "i-tag": "../../dist/tag/index",
+    "i-modal": "../../dist/modal/index"
   }
 }

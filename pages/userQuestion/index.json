@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "Tabs":"../../components/Tabs/Tabs",
-    "i-icon": "../../dist/icon/index"
+    "i-icon": "../../dist/icon/index",
+    "i-modal": "../../dist/modal/index",
+    "i-message": "../../dist/message/index"
   },
   "disableScroll":true
 }

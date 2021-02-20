@@ -1,62 +1,41 @@
 <!--pages/answer/index.wxml-->
 <view class='page'>
 	<view class="header-model2 css-shadow-bottom">
-		<i-row>
-			<i-col
-			 span="10"
-			 i-class="col-class-down"
-			 wx:if="{{isShowTime}}"
-			>
-				<text class="model2-timepiece">倒计时：{{countdown}}</text>
-			</i-col>
-
-			<i-col span="10" i-class="col-class-sub">
-				<text wx:if="{{isShowSubmit}}" class="submit" bindtap='handleSubmitOpen'>提交</text>
-			</i-col>
-		</i-row>
+		<text class="model2-timepiece">题目组：{{questionInfo.groupName}}
+		</text>
+		<view class="operation">
+			<view wx:if="{{isWrong}}" class="wrong-remove" bindtap="removeWrong">移除</view>
+			<view class="collection-img" bindtap="changeCollection">
+				<image wx:if="{{isCollection}}" src='/images/is-collection.png' mode="widthFix" style="width:30px;height:30px"/>
+				<image wx:else src='/images/no-collection.png' mode="widthFix" style="width:30px;height:30px"/>
+			</view>
+		</view>
+		
 	</view>
-
-	<!-- 进度条 -->
-	<i-progress
-	 percent="{{percent}}"
-	 stroke-width='2'
-	 i-class='progress'
-	 status="wrong"
-	 status="active"
-	 hide-info
-	></i-progress>
-	<!-- /进度条 -->
 
 	<!--题目-->
 	<view style='padding-bottom:44px;'>
 		<view class="question-list">
 			<view class="question-list-title">
-				<view class="title-left">
-					<i-tag
-						class="i-tags"
-						name="单选"
-						type="border"
-						color="blue"
-						wx:if="{{questionInfo.typeId==1}}"
-						>
-							单选
-						</i-tag>
-						<i-tag
-						class="i-tags"
-						name="多选"
-						type="border"
-						color="blue"
-						wx:if="{{questionInfo.typeId==2}}"
-						>
-							多选
-						</i-tag>
-					<text class='question-title'>{{questionInfo.text}}</text>
-				</view>
-				<view class="title-right" bindtap="changeCollection">
-					<image wx:if="{{isCollection}}" src='/images/is-collection.png' mode="widthFix" style="width:30px;height:30px"/>
-					<image wx:else src='/images/no-collection.png' mode="widthFix" style="width:30px;height:30px"/>
-				</view>
-				  
+				<i-tag
+				 class="i-tags"
+				 name="单选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==1}}"
+				>
+					单选
+				</i-tag>
+				<i-tag
+				 class="i-tags"
+				 name="多选"
+				 type="border"
+				 color="blue"
+				 wx:if="{{questionInfo.typeId==2}}"
+				>
+					多选
+				</i-tag>
+				<text class='question-title'>{{questionInfo.text}}</text>
 			</view>
 		</view>
 
@@ -229,26 +208,6 @@
 			</view>
 		</i-action-sheet>
 		<!--下拉弹出-->
-
-		<!--交卷对话框-->
-		<i-modal
-		 visible="{{ visible1 }}"
-		 actions="{{ action1 }}"
-		 bind:click="checkSubmit"
-		>
-			<view>确认交卷？</view>
-		</i-modal>
-
-		<!--时间到交卷对话框-->
-		<i-modal
-		 title="提示"
-		 visible="{{visible2}}"
-		 actions="{{action2}}"
-		 bind:click="handleSubmit"
-		>
-			<view>时间已到,系统自动交卷</view>
-		</i-modal>
-
 	</view>
 </view>
 <i-message id="message" />

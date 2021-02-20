@@ -5,12 +5,22 @@
 	 wx:for="{{questionGroupList}}"
 	 wx:key="id"
 	 bindtap="getUrl"
-	 data-groupId="{{item.id}}"
+	 data-group-id="{{item.id}}"
 	 data-time="{{item.time}}"
+	 data-cost-points="{{item.costPoints}}"
 	>
 		<view class="selectQuestionMenu">
 			{{item.text}}
 		</view>
 	</view>
+	<!--对话框-->
+	<i-modal
+		visible="{{ visible }}"
+		actions="{{ action }}"
+		bind:click="checkPoint"
+	>
+		<view>是否花费{{costPoints}}积分以解锁该题组</view>
+	</i-modal>
 </view>
+<i-message id="message" />
 

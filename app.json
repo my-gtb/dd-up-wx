@@ -18,7 +18,8 @@
     "pages/feedback/index",
     "pages/groupList/index",
     "pages/dailyQuestion/index",
-    "pages/userQuestion/index"
+    "pages/userQuestion/index",
+    "pages/wrongOrCollect/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -37,16 +38,10 @@
         "pagePath": "pages/select/index"
       },
       {
-        "text": "错题",
+        "text": "指南",
         "iconPath": "images/wrong.png",
         "selectedIconPath": "images/wrong-select.png",
         "pagePath": "pages/wrong/index"
-      },
-      {
-        "text": "排名",
-        "iconPath": "images/sort.png",
-        "selectedIconPath": "images/sort-select.png",
-        "pagePath": "pages/rank/index"
       },
       {
         "text": "我的",

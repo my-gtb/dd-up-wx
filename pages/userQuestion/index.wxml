@@ -26,9 +26,18 @@
                 </view>
             </scroll-view>
         </view>
-        <view wx:if="{{totalWrongCount > 0}}" class="clear-btn" bindtap="clearQuestionWrong">
+        <view wx:if="{{totalWrongCount > 0}}" class="clear-btn" bindtap="clearWrong">
             <text >清空我的错题</text>
         </view>
+
+        <!--对话框-->
+		<i-modal
+		 visible="{{ visible1 }}"
+		 actions="{{ action }}"
+		 bind:click="checkClearWrong"
+		>
+			<view>是否清空所有错题</view>
+		</i-modal>
 	</block>
 	<block wx:elif="{{tabs[1].isActive}}">
         <view class="item-img">
@@ -47,16 +56,26 @@
         <view class="collection-line"></view>
         <view>
             <scroll-view scroll-y="true" style="height:{{scrollHeight2}}px">
-                <view class="group-item" wx:for="{{collectionCountList}}" wx:key="index" data-group-id="{{item.groupId}}" bindtap="getGroupQuestionWrong">
+                <view class="group-item" wx:for="{{collectionCountList}}" wx:key="index" data-group-id="{{item.groupId}}" bindtap="getGroupQuestionCollection">
                     <view class="item-left">{{item.groupName}}</view>
                     <view class="item-right">{{item.count}}<i-icon type="enter"></i-icon></view>
                 </view>
             </scroll-view>
         </view>
 
-        <view wx:if="{{collectionCount > 0}}" class="clear-btn" bindtap="clearQuestionCollection">
+        <view wx:if="{{collectionCount > 0}}" class="clear-btn" bindtap="clearCollection">
             <text >清空我的收藏</text>
         </view>
+
+        <!--对话框-->
+		<i-modal
+		 visible="{{ visible2 }}"
+		 actions="{{ action }}"
+		 bind:click="checkClearCollection"
+		>
+			<view>是否清空所有已收藏的题目</view>
+		</i-modal>
     </block>
 </Tabs>
+<i-message id="message" />
 

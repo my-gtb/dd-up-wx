@@ -28,7 +28,7 @@
 			 bindtap="vipzt"
 			>
 			</image>
-			<text class="img-text">VIP真题</text>
+			<text class="img-text">历年真题</text>
 		</view>
 		<view class="item">
 			<image

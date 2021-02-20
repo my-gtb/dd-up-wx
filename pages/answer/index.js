@@ -28,6 +28,7 @@ Page({
     totalSecond:0, //倒计时秒数
     isStopCountDown:false, //停止倒计时
     isShowSubmit:true,  //是否显示提交按钮
+    isCollection:false,
     action1:[
       {
         name: '取消'
@@ -50,7 +51,6 @@ Page({
   onLoad(e) {
     var groupId = e.groupId != undefined ? e.groupId : 0;
     var groupType = e.groupType;
-    console.log(e);
     this.setData({
       groupId: groupId,
       isShowSubmit: groupId != 0
@@ -61,6 +61,7 @@ Page({
       url = "/question/getListByGroupTypeId/"+groupType;
     }
     this.fromBegin(url);
+    this.handelQuestionCollection();
     let showTimeArray = [getApp().globalData.groupType.TYPE_VIP,getApp().globalData.groupType.TYPE_SIMULATION];
 
     if( showTimeArray.indexOf(groupType) >= 0){
@@ -73,11 +74,32 @@ Page({
     }
   },
 
+  //页面加载时处理收藏题目
+  handelQuestionCollection(){
+    let customerId = getApp().globalData.customerId;
+    request({url: `/customer-wrong/getCollectionQuestionId/${customerId}`})
+      .then(res => {
+        let questionIds = res.data.questionIds;
+        console.log(questionIds);
+        let questions = this.data.result
+        questions.forEach(item => {
+          item.isCollection = false;
+          if(questionIds != [] && questionIds.indexOf(item.id) >= 0){
+            item.isCollection = true;
+          }
+        })
+
+        this.setData({
+          result:questions,
+          isCollection:this.data.questionInfo.isCollection
+        })
+      })
+  },
+
   /* 秒级倒计时 */
   setCountDown() {
     var that = this;
     let second = this.data.totalSecond;
-    console.log("this.data.totalSecond = "+ this.data.totalSecond);
     // 渲染倒计时时钟
     this.setData({
       countdown:this.dateFormat(second),
@@ -253,8 +275,6 @@ Page({
   //翻页
   handlePageChange({ detail }) {
     const action = detail.type;
-console.log("detail = ");
-console.log(detail);
     //上下一题
     if (action === 'next') {
       const r = this.data.result;
@@ -273,7 +293,6 @@ console.log(detail);
       }
 
       const i = this.data.index;
-      console.log(r);
       if (i == r.length) {
         this.statistical()
         $Message({
@@ -319,12 +338,13 @@ console.log(detail);
       if(this.data.isStopCountDown){
         canDisabled = true;
       }
-
+      console.log(r[i]);
       this.setData({
         index: i + 1,
         isDisabled:canDisabled,
         isChecked:false,
-        isShowParse:canShowParse
+        isShowParse:canShowParse,
+        isCollection:r[i].isCollection
       });
 
       if (this.data.isDisabled == false) {
@@ -337,12 +357,45 @@ console.log(detail);
       var i = this.data.index - 2;
 
       this.setThisData(i);
+      const r = this.data.result;
 
       this.setData({
         index: this.data.index - 1,
         isDisabled:true,
         isShowParse: !this.data.isShowTime,
+        isCollection:r[i].isCollection
       });
+    }
+  },
+
+  //收藏/取消收藏题目
+  changeCollection(){
+    let isCollection = this.data.isCollection;
+    let questionInfo = this.data.questionInfo;
+    questionInfo.isCollection = !isCollection;
+    this.setData({
+      isCollection:!isCollection,
+      questionInfo:questionInfo
+    })
+
+    let customerId = getApp().globalData.customerId;
+        let data = {
+          "customerId":customerId,
+          "questionId":questionInfo.id,
+          "groupId":questionInfo.groupId,
+          "isCollection":this.data.isCollection
+        };
+        request({url: "/question/saveQuestionWrong",data:data,method:'post'})
+        .then(res => {
+          console.log(res)
+        })
+    if(questionInfo.isCollection){
+      $Message({
+          content: '题目已收藏',
+          duration: 3,
+          type: 'success'
+        });
+        return;
     }
   },
 
@@ -353,14 +406,11 @@ console.log(detail);
       visible1:false
     })
     var result = this.data.result
-    console.log(result);
     var questionOk = this.data.questionOk
     let customerId = getApp().globalData.customerId;
     let submitData = [];
     let code = Math.round(new Date().getTime()/1000);
-    console.log("customerId = "+customerId);
-    console.log("result = ");
-    console.log(result);
+
     code = code + "-"+customerId;
     for(let i = 0;i < result.length;i++){
       if(result[i].chooses == undefined){

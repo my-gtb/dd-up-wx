@@ -1,4 +1,5 @@
 import { request } from "../../request/index.js";
+const { $Message } = require('../../dist/base/index');
 Page({
 
   /**
@@ -9,7 +10,20 @@ Page({
     currentPage:1,
     pagesize:6,
     groupType:0,
-    url:""
+    url:"",
+    visible:false,
+    isSign:false,
+    costPoints:0,
+    action:[
+      {
+        name: '否'
+      },
+      {
+        name: '是',
+        color: '#2db7f5',
+        loading: false
+      }
+    ],
   },
   totalPages:1,
 
@@ -17,7 +31,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.data.groupType = options.groupType;
+    this.setData({
+      isSign:getApp().globalData.isSignIn,
+      groupType:options.groupType
+    })
+
     this.getList();
   },
 
@@ -26,7 +44,7 @@ Page({
     var limit = this.data.pagesize;
 
     //获取套题
-    request({ 
+    request({
       url: `/question-group/pageCondition/${current}/${limit}/${this.data.groupType}`,
       method:"post"
     })
@@ -46,10 +64,32 @@ Page({
   },
 
   getUrl:function(event){
+    console.log(event);
+    if(this.data.groupType == getApp().globalData.groupType.TYPE_SIMULATION){
+      this.setData({
+        visible:true,
+        costPoints:event.currentTarget.dataset.costPoints
+      })
+      return;
+    }
     var groupId=event.currentTarget.dataset['groupid'];
     var time=event.currentTarget.dataset['time'];
     wx.navigateTo({
       url: "/pages/answer/index?groupId="+groupId+"&time="+time+"&groupType="+this.data.groupType
     })
   },
+  checkPoint({ detail }){
+    if (detail.index != 0) {
+      let customerId = getApp().globalData.customerId;
+      let isUnlock = false;
+      $Message({
+        content: '已解锁',
+        duration: 3,
+        type: 'success'
+      });
+    } 
+    this.setData({
+      visible:false,
+    })
+  }
 })

@@ -31,6 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
     this.setData({
       isSign:getApp().globalData.isSignIn,
       groupType:options.groupType
@@ -64,7 +65,6 @@ Page({
   },
 
   getUrl:function(event){
-    console.log(event);
     if(this.data.groupType == getApp().globalData.groupType.TYPE_SIMULATION){
       this.setData({
         visible:true,
@@ -72,7 +72,7 @@ Page({
       })
       return;
     }
-    var groupId=event.currentTarget.dataset['groupid'];
+    var groupId=event.currentTarget.dataset['groupId'];
     var time=event.currentTarget.dataset['time'];
     wx.navigateTo({
       url: "/pages/answer/index?groupId="+groupId+"&time="+time+"&groupType="+this.data.groupType

@@ -12,6 +12,7 @@ Page({
     var that = this;
     wx.getUserInfo({
       success(res) {
+
         wx.getUserInfo().then(res1 => {
           var bmobUser = res1.result;
           if (bmobUser.avatarUrl == '' || bmobUser.avatarUrl == undefined) {

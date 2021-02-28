@@ -1,0 +1,39 @@
+<!--pages/history/index.wxml-->
+<view class='page'>
+
+	<view class='header'>
+		<view class='score'>
+			<text style='font-size:90rpx;font-weight:bold;display:block;'>{{balance}}</text>
+			<text style='font-size:30rpx;display:block;'>当前剩余积分</text>
+		</view>
+	</view>
+	<view class="questionList">
+		<view class="log-title"> 
+			<text style="color:#2db7f5;font-size:21px;margin-right:6px;margin-left:6px;">|</text>
+			<text>积分记录</text>
+		</view>
+		<view>
+			<scroll-view scroll-y="true" style="height:{{scrollHeight}}px" bindscrolltolower="lower">
+                <i-row wx:for="{{pointLogs}}" wx:key="id" class="item-row">
+					<i-col
+					span="18"
+					i-class="col-class-left"
+					class="item-content"
+					>
+						<text class="model2-timepiece">{{item.intro}}</text>
+					</i-col>
+
+					<i-col span="2" i-class="col-class-right">
+						<text class="submit" >{{item.pointValue > 0 ? "+"+item.pointValue : item.pointValue}}</text>
+					</i-col>
+					<i-col span="24" i-class="col-class-sub">
+						<text class="item-date" >{{item.createdAt}}</text>
+					</i-col>
+				</i-row>
+            </scroll-view>
+			
+		</view>
+	</view>
+
+</view>
+

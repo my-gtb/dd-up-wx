@@ -14,6 +14,7 @@ Page({
     visible:false,
     isSign:false,
     costPoints:0,
+    groupId:0,
     action:[
       {
         name: '否'
@@ -65,31 +66,63 @@ Page({
   },
 
   getUrl:function(event){
-    if(this.data.groupType == getApp().globalData.groupType.TYPE_SIMULATION){
-      this.setData({
-        visible:true,
-        costPoints:event.currentTarget.dataset.costPoints
-      })
-      return;
-    }
     var groupId=event.currentTarget.dataset['groupId'];
     var time=event.currentTarget.dataset['time'];
-    wx.navigateTo({
-      url: "/pages/answer/index?groupId="+groupId+"&time="+time+"&groupType="+this.data.groupType
+    var costPoints=event.currentTarget.dataset.costPoints;
+    var isUnlock = true;
+    this.setData({
+      time:time,
+      groupId:groupId,
+      costPoints:costPoints
     })
+    if(this.data.groupType == getApp().globalData.groupType.TYPE_SIMULATION){
+      let customerId = getApp().globalData.customerId;
+
+      request({url:`/point-log/getHasPointLog/${customerId}/${groupId}`})
+      .then(res => {
+        if(!res.success){
+          isUnlock = false;
+          this.setData({
+            visible:true,
+          })
+        }else{
+          wx.navigateTo({
+            url: "/pages/answer/index?groupId="+groupId+"&time="+time+"&groupType="+this.data.groupType
+          })
+        }
+      })
+    }else{
+      wx.navigateTo({
+        url: "/pages/answer/index?groupId="+groupId+"&time="+time+"&groupType="+this.data.groupType
+      })
+    }
   },
   checkPoint({ detail }){
     if (detail.index != 0) {
       let customerId = getApp().globalData.customerId;
+      let groupId = this.data.groupId;
       let isUnlock = false;
-      $Message({
-        content: '已解锁',
-        duration: 3,
-        type: 'success'
-      });
+
+      request({url:`/point-account/unlockQuestionGroup/${customerId}/${groupId}`})
+      .then(res => {
+        let message = res.data.data.msg;
+        let isSuccess = res.data.data.success;
+        if(isSuccess){
+          wx.navigateTo({
+            url: "/pages/answer/index?groupId="+groupId+"&time="+this.data.time+"&groupType="+this.data.groupType
+          })
+        }else{
+          $Message({
+            content: message,
+            duration: 3,
+            type: "warning"
+          });
+        }
+        this.setData({
+          visible:false,
+        })
+      })      
     } 
-    this.setData({
-      visible:false,
-    })
+    
   }
 })

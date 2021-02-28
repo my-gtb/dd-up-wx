@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "答题",
+  "navigationBarTitleText": "首页",
   "usingComponents": {
     "i-tag": "../../dist/tag/index",
     "i-modal": "../../dist/modal/index"

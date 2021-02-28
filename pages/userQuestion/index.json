@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "错题/收藏",
   "usingComponents": {
     "Tabs":"../../components/Tabs/Tabs",
     "i-icon": "../../dist/icon/index",

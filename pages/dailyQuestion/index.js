@@ -16,6 +16,8 @@ Page({
     isOk:false,
     isDisabled:false,
     tips:"",
+    isExist:false,
+    point:0,
     action:[
       {
         name: '取消'
@@ -51,6 +53,13 @@ Page({
           typeId:res.data.questionForm.typeId
         })
       })
+    let customerId = getApp().globalData.customerId;
+    request({url: `/point-log/hasDailyPointLog/${customerId}/${questionId}`})
+      .then(res => {
+        this.setData({
+          isExist:res.success
+        })
+      })
   },
 
   choiceChange({detail = {}}){
@@ -76,9 +85,24 @@ Page({
       //交卷
       this.submit();
       let tips = "";
+      let customerId = getApp().globalData.customerId;
+      let questionId = this.data.questionInfo.id;
+      let groupId = this.data.questionInfo.groupId;
+      var isExist = this.data.isExist;
       if(this.data.isOk){
-        let pointNum = getApp().globalData.isSignIn ? "，积分 +1":"";
-        tips = "恭喜你回答正确"+pointNum;
+        tips = "恭喜你回答正确";
+        if(!isExist){
+          request({url: `/point-account/addPointOfDaily/${customerId}/${questionId}/${groupId}`})
+          .then(res => {
+            console.log("point");
+            console.log(res);
+            this.data.point=res.data.data.point
+            console.log("request = "+this.data.point);
+            this.setData({
+              tips:tips + "，积分 +"+ res.data.data.point
+            })
+          })
+        }
       }else{
         tips = "抱歉，你的答案是错误的"
         let customerId = getApp().globalData.customerId;
@@ -93,6 +117,7 @@ Page({
             console.log(res)
           })
       }
+      console.log("111111111111======="+this.data.point);
 
       this.setData({
         isVisible: false,
@@ -111,14 +136,13 @@ Page({
     let chooseNames = [];
     let keyNames = [];
     let submitData = [];
-    let isOk = false;
+    let isOk = true;
+
     for(let i = 0;i < options.length;i++){
       currentChecked.forEach(choose => {
         if(options[i].id == parseInt(choose)){
           chooseNames.push(this.data.s[i]+options[i].text)
-          if(options[i].isKey){
-            isOk = true;
-          }else{
+          if(!options[i].isKey){
             isOk = false;
           }
         }

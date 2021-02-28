@@ -1,0 +1,20 @@
+.guide-list{
+    margin: 24px;
+}
+.guide-item{
+    margin-bottom: 18px;
+}
+.item-title{
+    font-size: 22px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px #d0e9ff;
+    border-radius: 5px;
+}
+.title{
+    
+}
+.item-content{
+    font-size: 18px;
+    text-indent: 1cm;
+}

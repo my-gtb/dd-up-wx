@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "积分记录",
+  "usingComponents": {
+    "i-spin": "../../dist/spin/index",
+    "i-row": "../../dist/row/index",
+    "i-col": "../../dist/col/index"
+  },
+  "disableScroll":true
+}

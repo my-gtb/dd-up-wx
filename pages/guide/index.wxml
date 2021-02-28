@@ -1,0 +1,10 @@
+<view class="guide-list">
+    <view wx:for="{{list}}" wx:key="{{item.id}}" class="guide-item">
+        <view class="item-title">
+            {{index+1}}. {{item.title}}
+        </view>
+        <view class="item-content">
+            {{item.content}}
+        </view>
+    </view>
+</view>

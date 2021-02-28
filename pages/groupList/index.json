@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "分类",
   "usingComponents": {
     "i-modal": "../../dist/modal/index",
     "i-message": "../../dist/message/index"

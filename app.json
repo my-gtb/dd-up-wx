@@ -19,7 +19,9 @@
     "pages/groupList/index",
     "pages/dailyQuestion/index",
     "pages/userQuestion/index",
-    "pages/wrongOrCollect/index"
+    "pages/wrongOrCollect/index",
+    "pages/guide/index",
+    "pages/pointLog/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -41,7 +43,7 @@
         "text": "指南",
         "iconPath": "images/wrong.png",
         "selectedIconPath": "images/wrong-select.png",
-        "pagePath": "pages/wrong/index"
+        "pagePath": "pages/guide/index"
       },
       {
         "text": "我的",

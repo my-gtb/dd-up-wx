@@ -29,11 +29,8 @@ Page({
       "customerId":customerId,
       "signTime":timestamp
     }
-    console.log(data);
     request({url: "/customer/getSignIn",data:data,method:'post'})
       .then(res => {
-        console.log("res = ")
-        console.log(res)
         if(res.success){
           getApp().globalData.isSignIn = true;
           this.setData({

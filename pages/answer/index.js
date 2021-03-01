@@ -338,7 +338,7 @@ Page({
       if(this.data.isStopCountDown){
         canDisabled = true;
       }
-      console.log(r[i]);
+
       this.setData({
         index: i + 1,
         isDisabled:canDisabled,

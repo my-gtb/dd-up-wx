@@ -25,8 +25,6 @@ App({
           wx.getUserInfo({
             lang: "zh_CN",
             success: ures2  => {
-              console.log("结果：");
-              console.log(ures2);
               
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = ures2 .userInfo
@@ -49,8 +47,6 @@ App({
                 }
               })
               .then(result => {
-                console.log("登录返回的数据：");
-                console.log(result);
                 this.globalData.customerId = result.data.customerId;
               })
               

@@ -116,8 +116,6 @@ Page({
     let startTime = new Date().toLocaleDateString();
     let startTimeStamp = new Date(startTime).getTime() / 1000;
     let endTimeStamp = startTimeStamp + 24 * 60 * 60;
-    console.log("startTimeStamp "+startTimeStamp);
-    console.log("endTimeStamp "+endTimeStamp);
 
     wx.navigateTo({
       url: "/pages/wrongOrCollect/index?isWrong=true&startTime="+startTimeStamp+"&endTime="+endTimeStamp

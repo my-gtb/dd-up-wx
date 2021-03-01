@@ -94,10 +94,7 @@ Page({
         if(!isExist){
           request({url: `/point-account/addPointOfDaily/${customerId}/${questionId}/${groupId}`})
           .then(res => {
-            console.log("point");
-            console.log(res);
             this.data.point=res.data.data.point
-            console.log("request = "+this.data.point);
             this.setData({
               tips:tips + "，积分 +"+ res.data.data.point
             })

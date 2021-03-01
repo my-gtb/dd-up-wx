@@ -63,7 +63,6 @@ Page({
         total: total
       })
       this.setThisData(0)
-          console.log(this.data.questionInfo);
     if(this.data.questionInfo.isCollection){
       this.setData({
         isCollection: true,
@@ -74,7 +73,6 @@ Page({
         isCollection: true,
       })
     }
-    console.log("this.data.isCollection = " + this.data.isCollection);
     })
 
   },
@@ -207,7 +205,6 @@ Page({
 
   //翻页
   handlePageChange(e) {
-    console.log(e);
     const action = e.detail.type;
     //上下一题
     if (action === 'next') {
@@ -312,7 +309,6 @@ Page({
     })
   },
   dump(e){
-    console.log(e)
     var index = e.currentTarget.dataset.index
     this.setThisData(index)
     this.setData({
@@ -382,13 +378,11 @@ Page({
           "type":"next"
         }
       }
-      console.log(this.data.index);
       this.setData({
         result:result,
         total:this.data.total-1,
         isChecked:true,
       })
-      console.log(this.data.index);
       this.handlePageChange(e);
     }else{
       this.setData({

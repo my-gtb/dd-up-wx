@@ -12,7 +12,6 @@ Page({
 
   },
   handleChange(field, value) {
-    console.log(value);
     this.setData({
       [field]: value
     })

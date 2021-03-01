@@ -107,7 +107,7 @@ page{
   .col-class-sub{
     margin:10rpx 32rpx;
   }
-   /* i-row view .i-row{
+   .item-row{
     border-bottom: 1px #cdf1ff solid;
     margin-bottom: 20rpx;
-  } */
+  }

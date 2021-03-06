@@ -1,6 +1,6 @@
 <!--pages/answer/index.wxml-->
 <view class='page'>
-	<view class="header-model2 css-shadow-bottom">
+	<view wx:if="{{!isRealQuestion}}" class="header-model2 css-shadow-bottom">
 		<i-row>
 			<i-col
 			 span="10"
@@ -33,30 +33,53 @@
 			<view class="question-list-title">
 				<view class="title-left">
 					<i-tag
-						class="i-tags"
-						name="单选"
-						type="border"
-						color="blue"
-						wx:if="{{questionInfo.typeId==1}}"
-						>
-							单选
-						</i-tag>
-						<i-tag
-						class="i-tags"
-						name="多选"
-						type="border"
-						color="blue"
-						wx:if="{{questionInfo.typeId==2}}"
-						>
-							多选
-						</i-tag>
+					 class="i-tags"
+					 name="单选"
+					 type="border"
+					 color="blue"
+					 wx:if="{{questionInfo.typeId==1}}"
+					>
+						单选
+					</i-tag>
+					<i-tag
+					 class="i-tags"
+					 name="多选"
+					 type="border"
+					 color="blue"
+					 wx:if="{{questionInfo.typeId==2}}"
+					>
+						多选
+					</i-tag>
+					<i-tag
+					 class="i-tags"
+					 name="多选"
+					 type="border"
+					 color="blue"
+					 wx:if="{{questionInfo.typeId==3}}"
+					>
+						主观题
+					</i-tag>
 					<text class='question-title'>{{questionInfo.text}}</text>
 				</view>
-				<view class="title-right" bindtap="changeCollection">
-					<image wx:if="{{isCollection}}" src='/images/is-collection.png' mode="widthFix" style="width:30px;height:30px"/>
-					<image wx:else src='/images/no-collection.png' mode="widthFix" style="width:30px;height:30px"/>
+				<view
+				 wx:if="{{questionInfo.typeId!=3}}"
+				 class="title-right"
+				 bindtap="changeCollection"
+				>
+					<image
+					 wx:if="{{isCollection}}"
+					 src='/images/is-collection.png'
+					 mode="widthFix"
+					 style="width:30px;height:30px"
+					/>
+					<image
+					 wx:else
+					 src='/images/no-collection.png'
+					 mode="widthFix"
+					 style="width:30px;height:30px"
+					/>
 				</view>
-				  
+
 			</view>
 		</view>
 
@@ -103,19 +126,31 @@
 			</checkbox-group>
 		</i-panel>
 
+		<!--答案选择 - 主观题-->
+		<i-panel wx:if="{{questionInfo.typeId==3}}">
+			<view>
+
+			</view>
+		</i-panel>
+
 		<i-panel>
-			<view wx:if="{{isShowParse}}">
+			<view wx:if="{{isRealQuestion || isShowParse}}">
 				<view class='answer'>
 					<view class='answerTitle'>正确答案：</view>
 					<view class='answerContent'>
-						<view wx:for="{{questionInfo.keyNames}}" wx:key="index">{{item}}</view>
+						<view wx:if="{{!isRealQuestion}}">
+							<view wx:for="{{questionInfo.keyNames}}" wx:key="index">{{item}}</view>
+						</view>
+						<view wx:if="{{isRealQuestion}}">{{questionInfo.keyNames}}</view>
 					</view>
-					<view class='answerTitle'>你的答案：</view>
-					<view wx:if="{{questionInfo.optionNames.length>0}}" class='answerContent'>
-						<view wx:for="{{questionInfo.optionNames}}" wx:key="index">{{item}}</view>
-					</view>
-					<view wx:else class='answerContent'>
-						<view>空</view>
+					<view wx:if="{{!isRealQuestion}}">
+						<view class='answerTitle'>你的答案：</view>
+						<view wx:if="{{questionInfo.optionNames.length>0}}" class='answerContent'>
+							<view wx:for="{{questionInfo.optionNames}}" wx:key="index">{{item}}</view>
+						</view>
+						<view wx:else class='answerContent'>
+							<view>空</view>
+						</view>
 					</view>
 					<view class='answerTitle'>解析：</view>
 					<view wx:if="{{questionInfo.parse !=''}}" class='answerContent'>

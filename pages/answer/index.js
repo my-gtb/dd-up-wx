@@ -29,6 +29,7 @@ Page({
     isStopCountDown:false, //停止倒计时
     isShowSubmit:true,  //是否显示提交按钮
     isCollection:false,
+    isRealQuestion:false,
     action1:[
       {
         name: '取消'
@@ -51,6 +52,12 @@ Page({
   onLoad(e) {
     var groupId = e.groupId != undefined ? e.groupId : 0;
     var groupType = e.groupType;
+    if(groupType == 1){
+      this.setData({
+        isDisabled: true,
+        isRealQuestion:true,
+      })
+    }
     this.setData({
       groupId: groupId,
       isShowSubmit: groupId != 0
@@ -61,6 +68,7 @@ Page({
       url = "/question/getListByGroupTypeId/"+groupType;
     }
     this.fromBegin(url);
+
     this.handelQuestionCollection();
     let showTimeArray = [getApp().globalData.groupType.TYPE_VIP,getApp().globalData.groupType.TYPE_SIMULATION];
 
@@ -127,10 +135,27 @@ Page({
 
   //重头开始答题
   fromBegin(url){
+    var s = this.data.s;
     request({url: url})
     .then(res => {
+      let list = res.data.questionList;
+      list.forEach(item => {
+        let key = [];
+        let keyIds = item.keyIds;
+        let options = item.options;
+        if(item.typeId != 3){
+          for(let i = 0;i < options.length;i++){
+            if(keyIds.indexOf(options[i].id) >= 0){
+              key.push(s[i]+options[i].text)
+            }
+          }
+        }else{
+          key = options[0].customData
+        }
+        item.keyNames = key;
+      })
       this.setData({
-        result:res.data.questionList,
+        result:list,
         total:res.data.total
       })
       this.setThisData(0)
@@ -190,18 +215,6 @@ Page({
     let questionInfo = this.data.questionInfo
     let result = this.data.result
     let index = this.data.index
-    let keyIds = result[index-1].keyIds
-
-    let keyNames = [];
-    for(let i = 0;i < options.length;i++){
-      for(let j = 0;j < keyIds.length;j++){
-        if(keyIds[j] == options[i].id){
-          keyNames.push(this.data.s[i]+options[i].text);
-          continue;
-        }
-      }
-    }
-    result[index-1].keyNames = keyNames;
 
     if (questionInfo.isOk === 1) {
       questionOk = questionOk + 1
@@ -282,7 +295,20 @@ Page({
       const isChecked = this.data.isChecked;
       const isDisabled = this.data.isDisabled;
       const questionInfo = this.data.questionInfo;
-
+      const i = this.data.index;
+      if(this.data.isRealQuestion){
+        if(i >= r.length){
+          return;
+        }
+        this.setThisData(i);
+        this.setData({
+          index: i + 1,
+          isDisabled:true,
+          isChecked:true,
+          isCollection:r[i].isCollection
+        })
+        return
+      }
       if (!isDisabled && !isChecked) {
         wx.showToast({
           title: '请选择答案',
@@ -292,7 +318,7 @@ Page({
         return;
       }
 
-      const i = this.data.index;
+      
       if (i == r.length) {
         this.statistical()
         $Message({

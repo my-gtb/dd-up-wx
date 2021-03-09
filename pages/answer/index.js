@@ -30,6 +30,7 @@ Page({
     isShowSubmit:true,  //是否显示提交按钮
     isCollection:false,
     isRealQuestion:false,
+    groupType:0,
     action1:[
       {
         name: '取消'
@@ -60,7 +61,8 @@ Page({
     }
     this.setData({
       groupId: groupId,
-      isShowSubmit: groupId != 0
+      isShowSubmit: groupId != 0,
+      groupType:groupType
     })
 
     let url = "/question/getQuestionList/"+groupId;
@@ -243,18 +245,31 @@ Page({
   radioChange({detail = {}}){
     var val = detail.value;
     var options = this.data.result[this.data.index-1].options;
-    let questionInfo = this.data.questionInfo
+    let questionInfo = this.data.questionInfo;
+    let currentAnswer = "";
+    let idx = 0;
+    let s = this.data.s;
     options.forEach(item => {
       item.isChecked = false;
       if(item.id == val){
         item.isChecked = true;
+        currentAnswer = s[idx]+item.text;
         if(item.isKey) {
           questionInfo.isOk = 1
         } else {
           questionInfo.isOk = 0
         }
       }
+      idx++;
     });
+    if(this.data.groupType == 3 || this.data.groupType == 4){
+      this.statistical();
+      questionInfo.optionNames = [currentAnswer];
+      this.setData({
+        isShowParse:true,
+        isDisabled:true,
+      })
+    }
     this.setData({
       questionInfo: questionInfo,
       current: val,
@@ -283,6 +298,27 @@ Page({
       currentD: vals,
       isChecked: true,
     });
+  },
+
+  handleCheckboxAnswer(){
+    let questionInfo = this.data.questionInfo;
+    let s = this.data.s;
+    let currentD = this.data.currentD;
+    let names = [];
+    let idx = 0;
+    questionInfo.options.forEach(item => {
+      if(currentD.indexOf(item.id+"") >= 0){
+        names.push(s[idx]+item.text);
+      }
+      idx++;
+    });
+    this.statistical();
+    questionInfo.optionNames = names;
+    this.setData({
+      isShowParse:true,
+      isDisabled:true,
+      questionInfo:questionInfo
+    })
   },
 
   //翻页

@@ -1,6 +1,8 @@
 <!--pages/answer/index.wxml-->
 <view class='page'>
+
 	<view wx:if="{{!isRealQuestion}}" class="header-model2 css-shadow-bottom">
+		<!--答案选择 - 主观题-->
 		<i-row>
 			<i-col
 			 span="10"
@@ -126,13 +128,6 @@
 			</checkbox-group>
 		</i-panel>
 
-		<!--答案选择 - 主观题-->
-		<i-panel wx:if="{{questionInfo.typeId==3}}">
-			<view>
-
-			</view>
-		</i-panel>
-
 		<i-panel>
 			<view wx:if="{{isRealQuestion || isShowParse}}">
 				<view class='answer'>
@@ -159,6 +154,10 @@
 				</view>
 			</view>
 		</i-panel>
+
+		<view wx:if="{{(groupType == 3 || groupType == 4 ) && questionInfo.typeId==2 && !isDisabled}}">
+			<button class="answer-btn" bindtap='handleCheckboxAnswer'>确定答案</button>
+		</view>
 
 		<!--底部栏-->
 		<view class='css-shadow tab-bar'>
@@ -188,6 +187,7 @@
 									</view>
 								</button>
 							</view>
+
 						</i-col>
 					</i-row>
 				</view>

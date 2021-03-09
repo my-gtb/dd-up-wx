@@ -133,7 +133,7 @@ Page({
     let chooseNames = [];
     let keyNames = [];
     let submitData = [];
-    let isOk = true;
+    let isOk = currentChecked.length <= 0 ? false :true;
 
     for(let i = 0;i < options.length;i++){
       currentChecked.forEach(choose => {

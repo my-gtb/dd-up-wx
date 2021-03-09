@@ -47,6 +47,7 @@ App({
                 }
               })
               .then(result => {
+                console.log(result);
                 this.globalData.customerId = result.data.customerId;
               })
               

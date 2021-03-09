@@ -117,11 +117,10 @@ Page({
             type: "warning"
           });
         }
-        this.setData({
-          visible:false,
-        })
       })      
     } 
-    
+    this.setData({
+      visible:false,
+    })
   }
 })

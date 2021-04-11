@@ -1,22 +1,28 @@
-// pages/start/index.js
-
+const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     userInfo: {},
+    avatarUrl:"",
   },
   onLoad(e) {
     var that = this;
-    wx.getUserInfo({
-      success(res) {
+    wx.showLoading({
+      title: "加载中",
+      })
+    setTimeout(function(e) {
+      wx.hideLoading()
+      let avatarUrl = app.globalData.avatarUrl;
+      console.log("avatarUrl");
+      console.log(avatarUrl);
+      if(avatarUrl != "" && avatarUrl != null){
         that.setData({
-          userInfo: res.userInfo
+          avatarUrl:avatarUrl
         })
       }
-    })
+    }, 1000)
   },
   bindgetuserinfo() {
     var that = this;
@@ -27,6 +33,7 @@ Page({
         })
       }
     })
+    
   },
   goSign() {
     wx.reLaunch({

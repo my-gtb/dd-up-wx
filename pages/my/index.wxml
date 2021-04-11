@@ -1,26 +1,61 @@
 <!--pages/my/index.wxml-->
 <view class="header">
-  <i-row>
-    <i-col span="20" i-class="col-class">
-      <view class="header-pic">
-        <i-avatar size="large" wx:if="{{!userInfo.avatarUrl}}" i-class="userPic" shape="square"></i-avatar>
-        <i-avatar size="large" wx:else shape="square" i-class="userPic" src="{{userInfo.avatarUrl}}"></i-avatar>
-        <text wx:if="{{!userInfo.avatarUrl}}" style="margin-left:15rpx;">未授权</text>
-        <text wx:else style="margin-left:15rpx;">{{userInfo.nickName}}</text>
-      </view>
-    </i-col>
+	<i-row>
+		<i-col span="20" i-class="col-class">
+			<view class="header-pic">
+				<i-avatar
+				 size="large"
+				 wx:if="{{!avatarUrl}}"
+				 i-class="userPic"
+				 shape="square"
+				></i-avatar>
+				<i-avatar
+				 size="large"
+				 wx:else
+				 shape="square"
+				 i-class="userPic"
+				 src="{{avatarUrl}}"
+				></i-avatar>
+				<text wx:if="{{!avatarUrl}}" style="margin-left:15rpx;">未授权</text>
+				<text wx:else style="margin-left:15rpx;">{{nickName}}</text>
+			</view>
+		</i-col>
 
-  </i-row>
+	</i-row>
 </view>
 <view class="bg-line"></view>
 <i-cell-group>
-  <i-cell title="积分记录" is-link url="/pages/pointLog/index">
-    <i-icon type="activity" color="#2db7f5" slot="icon" size='18' />
-  </i-cell>
-  <i-cell title="反馈意见" is-link url="/pages/feedback/index">
-    <i-icon type="service" color="#2db7f5" slot="icon" size='18' />
-  </i-cell>
-  <i-cell title="关于我们" bind:click="about">
-    <i-icon type="addressbook" color="#2db7f5" slot="icon" size='18'/>
-  </i-cell>
+	<i-cell
+	 title="积分记录"
+	 is-link
+	 url="/pages/pointLog/index"
+	>
+		<i-icon
+		 type="activity"
+		 color="#2db7f5"
+		 slot="icon"
+		 size='18'
+		/>
+	</i-cell>
+	<i-cell
+	 title="反馈意见"
+	 is-link
+	 url="/pages/feedback/index"
+	>
+		<i-icon
+		 type="service"
+		 color="#2db7f5"
+		 slot="icon"
+		 size='18'
+		/>
+	</i-cell>
+	<i-cell title="关于我们" bind:click="about">
+		<i-icon
+		 type="addressbook"
+		 color="#2db7f5"
+		 slot="icon"
+		 size='18'
+		/>
+	</i-cell>
 </i-cell-group>
+

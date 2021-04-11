@@ -35,7 +35,7 @@ App({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(ures2 )
               }
-              request({ 
+              request({
                 url: "/weixin/getOpenid",
                 data:{
                   code: code,
@@ -45,10 +45,11 @@ App({
                 header: {
                   'content-type': 'application/x-www-form-urlencoded',
                 }
-              })
-              .then(result => {
+              }).then(result => {
                 console.log(result);
                 this.globalData.customerId = result.data.customerId;
+                this.globalData.nickName = result.data.nickName;
+                this.globalData.avatarUrl = result.data.avatarUrl;
               })
               
             }
@@ -60,6 +61,8 @@ App({
   globalData: {
     userInfo: null,
     customerId:null,
+    nickName:"",
+    avatarUrl:"",
     groupType:{
       TYPE_VIP:"1",
       TYPE_SIMULATION:"2",

@@ -1,11 +1,12 @@
-// pages/my/index.js
+const app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo:{}
+    avatarUrl:"",
+    nickName:""
   },
 
   /**
@@ -13,12 +14,11 @@ Page({
    */
   onLoad (options) {
     var that = this
-    wx.getUserInfo({
-      success(res) {
-        that.setData({
-          userInfo:res.userInfo
-        })
-      }
+    let avatarUrl = app.globalData.avatarUrl;
+    let nickName = app.globalData.nickName;
+    that.setData({
+      avatarUrl:avatarUrl,
+      nickName:nickName
     })
   },
   onShareAppMessage(){

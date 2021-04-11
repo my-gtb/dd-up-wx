@@ -5,7 +5,7 @@
 		<!--答案选择 - 主观题-->
 		<i-row>
 			<i-col
-			 span="10"
+			 span="12"
 			 i-class="col-class-down"
 			 wx:if="{{isShowTime}}"
 			>
